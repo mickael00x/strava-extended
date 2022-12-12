@@ -1,6 +1,7 @@
 const Statistics = () => {
     return (
-        <div>grosses stats sa mère
+        <div>
+            grosses stats sa mère
         </div>
     )
 }

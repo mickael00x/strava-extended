@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react"; 
+import { useEffect, useState, useCallback } from "react"; 
 import Activity from "./Activity";
 import polyline from "../toolbox/polylineDecoder"; 
+import Settings from "./Settings";
 
 const ActivitiesData = () => {
     const [accessToken, setAccessToken] = useState("");
@@ -51,11 +52,36 @@ const ActivitiesData = () => {
             }); 
     }, [accessToken]);
 
+    
+
+    const [map, setMap] = useState(true);
+    const [rows, setRows] = useState(2);
+
+    const handleMap = useCallback(() => {
+        return setMap(!map);
+    }, [map]);
+
+    const handleRows = useCallback((e) => {
+        return setRows(Number(e.target.value));
+    }, []);
+
     return (
-        <div className="activites inline-grid gap-10 grid-cols-2 ">
-            {activities && activities.map((activity, index) => (
-                <Activity key={activity.id} activity={activity} />
-            ))}
+        <div className="activites">
+            <Settings 
+                handleMap={handleMap} 
+                map={map}
+                handleRows={handleRows} 
+                rows={rows}
+                />
+            <div className={"inline-grid gap-10 grid-cols-" + rows}>
+                {activities && activities.map((activity, index) => (
+                    <Activity 
+                        key={activity.id} 
+                        activity={activity} 
+                        map={map}
+                    />
+                ))}
+            </div>
         </div>
     )
 }
