@@ -56,6 +56,8 @@ const ActivitiesData = () => {
 
     const [map, setMap] = useState(true);
     const [rows, setRows] = useState(2);
+    const [type, setType] = useState(true);
+    const [heartRate, setHeartRate] = useState(true);
 
     const handleMap = useCallback(() => {
         return setMap(!map);
@@ -65,6 +67,13 @@ const ActivitiesData = () => {
         return setRows(Number(e.target.value));
     }, []);
 
+    const handleType = useCallback(() => {
+        return setType(!type);
+    }, [type]);
+    const handleHeartRate = useCallback(() => {
+        return setHeartRate(!heartRate);
+    }, [heartRate]);
+
     return (
         <div className="activites">
             <Settings 
@@ -72,13 +81,19 @@ const ActivitiesData = () => {
                 map={map}
                 handleRows={handleRows} 
                 rows={rows}
+                type={type}
+                handleType={handleType}
+                heartrate={heartRate}
+                handleHeartRate={handleHeartRate}
                 />
-            <div className={"inline-grid gap-10 grid-cols-" + rows}>
+            <div className={"inline-grid gap-10 grid-cols-" + rows + " transition-all"}>
                 {activities && activities.map((activity, index) => (
                     <Activity 
                         key={activity.id} 
                         activity={activity} 
-                        map={map}
+                        mapEnabled={map}
+                        typeEnabled={type}
+                        heartRateEnabled={heartRate}
                     />
                 ))}
             </div>
